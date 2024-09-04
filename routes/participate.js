@@ -6,7 +6,8 @@ import {
     cancelReserve,
     decreaseNumStd,
     upload,
-    getAll
+    getByStd_ID,
+    getByAct_ID
 
 
 } from '../controllers/participate.js'
@@ -18,11 +19,15 @@ import {
 } from '../controllers/participate.js'; // Adjust the path as needed
 const router = express.Router()
 
-router.get('/participates', getAll)
+router.get('/participate', getByStd_ID)
+router.get('/reserve', getByAct_ID)
+
+
+
 router.get('/reserve/:id', readManageOne)
 router.get('/upload', upload)
 
-router.post('/reserve', reserveActivity)
+router.post('/participate', reserveActivity)
 
 router.delete('/reserve', cancelReserve)
 router.put('/cancelReserve', decreaseNumStd)
