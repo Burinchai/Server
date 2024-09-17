@@ -11,7 +11,7 @@ export const getMailbox = (req, res) => {
             notify n
         JOIN
             notification noti ON noti.noti_ID = n.noti_ID
-        WHERE login_ID = 10
+        WHERE login_ID = ?
     `;
 
     db.query(sql, [login_ID], (err, result) => {
