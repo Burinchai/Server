@@ -21,7 +21,7 @@ export const read = (req, res) => {
         news_ID,
         login_ID
     } = req.body
-    const sql = `update notify set notify_status = "read" where news_ID = ? and login_ID = ?`
+    const sql = `update notify set notify_status = "อ่านแล้ว" where news_ID = ? and login_ID = ?`
     db.query(sql, [news_ID, login_ID], (err, result) => {
         if (err) return res.status(500).json(err)
         return res.json(result)
