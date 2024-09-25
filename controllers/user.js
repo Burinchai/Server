@@ -69,25 +69,35 @@ export const updateUser = (req, res) => {
     const { role, fname, lname, email, mobile, address, province, district, subdistrict, sec_ID, zipcode } = req.body;
 
     let sql;
-    let values = [fname, lname, email, mobile, address, sec_ID, province, district, subdistrict, zipcode, id];
+    let values;
 
     if (role === 'teacher') {
         sql = `
             UPDATE teacher
             SET 
-                staff_fname = ?,               
-                staff_lname = ?,               
-                staff_email = ?,               
-                staff_mobile = ?,                
-                staff_address = ?,
-                sec_ID = ?,
-                province = ?,            
-                district = ?,            
-                subdistrict = ?,               
-                zipcode = ?      
+                t_fname = ?,               
+                t_lname = ?,               
+                t_email = ?,               
+                t_mobile = ?,                
+                t_address = ?,
+                t_province = ?,            
+                t_district = ?,            
+                t_subdistrict = ?,               
+                t_zipcode = ?      
             WHERE 
                 login_ID = ?
         `;
+
+        values = [fname, lname, email, mobile, address, province, district, subdistrict, zipcode, id];
+
+        // const {t_ID} = req.body;
+
+        // db.query("UPDATE section SET t_ID = ? WHERE sec_ID = ?",[t_ID, sec_ID], (err, result) => {
+        //     if (err) return res.status(500).json({ message: 'Database query failed', error: err });
+        //     return res.json({
+        //         message: `Section updated successfully`
+        // });
+        // })
     } else if (role === 'student') {
         sql = `
             UPDATE student
@@ -98,13 +108,14 @@ export const updateUser = (req, res) => {
                 std_mobile = ?,                
                 std_address = ?,
                 sec_ID = ?,
-                province = ?,            
-                district = ?,            
-                subdistrict = ?,               
-                zipcode = ?      
+                std_province = ?,            
+                std_district = ?,            
+                std_subdistrict = ?,               
+                std_zipcode = ?      
             WHERE 
-                std_ID = ?
+                login_ID = ?
         `;
+        values = [fname, lname, email, mobile, address, sec_ID, province, district, subdistrict, zipcode, id];
     } else {
         return res.status(400).json({
             message: 'Invalid role specified'
@@ -119,3 +130,6 @@ export const updateUser = (req, res) => {
     });
 };
 
+export const deleteUser = (req, res) => {
+    
+};

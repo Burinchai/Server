@@ -135,13 +135,13 @@ export const updateStudent = (req, res) => {
         std_email,
         std_mobile,
         std_address,
-        province,
-        district,
-        subdistrict,
-        zipcode
+        std_province,
+        std_district,
+        std_subdistrict,
+        std_zipcode
     } = req.body;
 
-    db.query(sql, [std_fname, std_lname, sec_ID, std_email, std_mobile, std_address, province, district, subdistrict, zipcode, id], (err, result) => {
+    db.query(sql, [std_fname, std_lname, sec_ID, std_email, std_mobile, std_address, std_province, std_district, std_subdistrict, std_zipcode, id], (err, result) => {
         if (err) {
             return res.status(500).json({
                 error: err.message

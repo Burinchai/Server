@@ -57,7 +57,7 @@ export const readTeacherAll = (req, res) => {
 
 //read one
 export const readTeacherOne = (req, res) => {
-    const sql = 'select * from teacher where t_ID = ?'
+    const sql = 'select t.*, s.* from teacher t left join section s on t.t_ID = s.t_ID  where t.t_ID = ?'
     const {
         id
     } = req.params
@@ -73,21 +73,21 @@ export const updateTeacher = (req, res) => {
         id
     } = req.params
     const {
-        staff_fname,
-        staff_lname,
-        staff_email,
-        staff_mobile,
-        staff_address,
-        province,
-        district,
-        subdistrict,
-        zipcode,
+        t_fname,
+        t_lname,
+        t_email,
+        t_mobile,
+        t_address,
+        t_province,
+        t_district,
+        t_subdistrict,
+        t_zipcode,
         sec_ID
     } = req.body
-    const q = 'UPDATE `teacher` SET `staff_fname`= ?,`staff_lname`= ?,`staff_email`= ?,`staff_mobile`= ?,`staff_address`= ?,`province`= ?,`district`= ?,`subdistrict`= ?,`zipcode`= ?, sec_ID = ? WHERE login_ID = ?'
+    const q = 'UPDATE `teacher` SET `t_fname`= ?,`t_lname`= ?,`t_email`= ?,`t_mobile`= ?,`t_address`= ?,`t_province`= ?,`t_district`= ?,`t_subdistrict`= ?,`t_zipcode`= ? WHERE t_ID = ?'
 
-    db.query(q, [staff_fname,
-        staff_lname, staff_email, staff_mobile, staff_address, province, district, subdistrict, zipcode, sec_ID, id
+    db.query(q, [t_fname,
+        t_lname, t_email, t_mobile, t_address, t_province, t_district, t_subdistrict, t_zipcode, id
     ], (err, result) => {
         if (err) return res.status(500).json(err)
         return res.json(result)

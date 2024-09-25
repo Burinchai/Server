@@ -133,11 +133,18 @@ export const updateActivity = (req, res) => {
 export const getAll = (req, res) => {
   const sql = `
   SELECT 
-    activity.*, teacher.*
-  FROM 
+    activity.*, 
+    COUNT(participate.std_ID) AS act_numStdReserve, 
+    teacher.*
+FROM 
     activity
-  JOIN 
-    teacher ON activity.t_ID = teacher.t_ID;
+JOIN 
+    teacher ON activity.t_ID = teacher.t_ID
+LEFT JOIN 
+    participate ON activity.act_ID = participate.act_ID
+GROUP BY 
+    activity.act_ID, teacher.t_ID;
+
   `
         
   db.query(sql, (err, result) => {

@@ -13,7 +13,7 @@ const baseURL = "localhost:5173";
 // Request Password Reset
 export const forgotPassword = async (req, res) => {
   const mailerSend = new MailerSend({
-    apiKey: "mlsn.eb1abc9f46a58b00db1f2e031a2056559856a427a0fcfce7f51a4de1211cd861",
+    apiKey: "mlsn.38ccf133a25d59fefee5688a78deeaccd18812fbdfb21aa65e71ffe2278b3dad",
   });
 
   try {
@@ -27,11 +27,11 @@ export const forgotPassword = async (req, res) => {
       [email]
     );
     const [teacherResult] = await dbPromise.query(
-      "SELECT * FROM teacher WHERE staff_email = ?",
+      "SELECT * FROM teacher WHERE t_email = ?",
       [email]
     );
     const [adminResult] = await dbPromise.query(
-      "SELECT * FROM admin WHERE email = ?",
+      "SELECT * FROM admin WHERE a_email = ?",
       [email]
     );
 
@@ -55,9 +55,12 @@ export const forgotPassword = async (req, res) => {
     console.log(user);
 
     const token = crypto.randomBytes(20).toString("hex");
+
+    const expirationTime = new Date(Date.now() + 3600000).toISOString().slice(0, 19).replace('T', ' ');
+
     await dbPromise.query(
-      "UPDATE login SET resetToken = ?, resetTokenExpiration = ? WHERE username = ?",
-      [token, Date.now() + 3600000, user.login_ID]
+      "UPDATE login SET resetToken = ?, resetTokenExpiration = ? WHERE login_ID = ?",
+      [token, expirationTime, user.login_ID]
     );
 
     const recipients = [new Recipient(email, "Recipient")];
@@ -65,8 +68,8 @@ export const forgotPassword = async (req, res) => {
     // Create email parameters
     const emailParams = new EmailParams({
       from: {
-        email: "no-reply@trial-yzkq34072d0ld796.mlsender.net", // Replace with your verified sender email
-        name: "IT Activity System", // Optional: Add sender name if required
+        email: "no-reply@trial-3yxj6ljpw21ldo2r.mlsender.net", // Replace with your verified sender email
+        name: "IT Activity Support", // Optional: Add sender name if required
       },
       to: recipients,
       subject: "รีเซ็ตรหัสผ่านของคุณ",
@@ -152,21 +155,12 @@ export const changePassword = async (req, res) => {
 
     // Fetch the user based on role
     let userQuery;
-    if (role === 'student') {
-      userQuery = await new Promise((resolve, reject) => {
-        db.query('SELECT * FROM login WHERE username = ?', [id], (err, results) => {
-          if (err) return reject(err);
-          resolve(results);
-        });
-      });
-    } else {
       userQuery = await new Promise((resolve, reject) => {
         db.query('SELECT * FROM login WHERE login_ID = ?', [id], (err, results) => {
           if (err) return reject(err);
           resolve(results);
         });
       });
-    }
 
     if (userQuery.length === 0) {
       return res.status(404).json({
@@ -189,11 +183,8 @@ export const changePassword = async (req, res) => {
 
     // Update the password
     let updateQuery;
-    if (role === 'student') {
-      updateQuery = 'UPDATE login SET password = ? WHERE username = ?';
-    } else {
+
       updateQuery = 'UPDATE login SET password = ? WHERE login_ID = ?';
-    }
 
     const updateResult = await new Promise((resolve, reject) => {
       db.query(updateQuery, [hashedNewPassword, role === 'student' ? id : user.login_ID], (err, results) => {

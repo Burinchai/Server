@@ -280,7 +280,7 @@ export const arrayregister = async (req, res) => {
 
             if (role === "teacher") {
               sql2 =
-                "INSERT INTO teacher (staff_fname, staff_lname, staff_mobile, staff_email, login_ID, sec_ID) VALUES (?, ?, ?, ?, ?, ?)";
+                "INSERT INTO teacher (t_fname, t_lname, t_mobile, t_email, login_ID, sec_ID) VALUES (?, ?, ?, ?, ?, ?)";
               values = [fname, lname, mobile, email, loginID, sec_ID];
 
               db.query(sql2, values, (err, results) => {
