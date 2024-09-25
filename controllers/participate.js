@@ -33,57 +33,40 @@ export const getByAct_ID = (req, res) => {
 // getAll
 export const getByStd_ID = (req, res) => {
     const {std_ID} = req.query
-    const sql = `
-        select 
-            a.*, 
-            count(p.std_ID) as numStdReserve, 
-            p.std_ID, 
-            p.par_status, 
-            t.t_fname, 
-            t.t_lname, 
-            t.t_mobile, 
-            t.t_email
-        from 
-            activity a
-        left join participate p on a.act_ID = p.act_ID
-        left join teacher t on t.t_ID = a.t_ID
 
-        group by a.act_ID, p.std_ID, p.par_status, t.t_fname, t.t_lname, t.t_mobile, t.t_email;
-        
-    `
-//     const sql2 = `
-// SELECT 
-//     activity.act_ID,
-//     activity.t_ID,
-//     activity.act_title,
-//     activity.act_desc,
-//     activity.act_dateStart,
-//     activity.act_dateEnd,
-//     activity.act_numStd,
-//     activity.act_location,
-//     activity.act_status,
-//     activity.act_createAt,
-//     activity.act_transaction,
-//     participate.std_ID,
-//     participate.par_status,
-//     teacher.t_fname,
-//     teacher.t_lname,
-//     teacher.t_mobile,
-//     teacher.t_email,
-//     COALESCE(participate_count.numStdReserve, 0) AS numStdReserve
-// FROM
-//     activity
-//     LEFT JOIN participate ON activity.act_ID = participate.act_ID 
-//                           AND participate.std_ID = ?
-//     LEFT JOIN teacher ON activity.t_ID = teacher.t_ID
-//     LEFT JOIN (
-//         SELECT act_ID, COUNT(*) AS numStdReserve
-//         FROM participate
-//         GROUP BY act_ID
-//     ) AS participate_count ON activity.act_ID = participate_count.act_ID
-// ORDER BY activity.act_ID;
+    const sql2 = `
+SELECT 
+    activity.act_ID,
+    activity.t_ID,
+    activity.act_title,
+    activity.act_desc,
+    activity.act_dateStart,
+    activity.act_dateEnd,
+    activity.act_numStd,
+    activity.act_location,
+    activity.act_status,
+    activity.act_createAt,
+    activity.act_transaction,
+    participate.std_ID,
+    participate.par_status,
+    teacher.t_fname,
+    teacher.t_lname,
+    teacher.t_mobile,
+    teacher.t_email,
+    COALESCE(participate_count.numStdReserve, 0) AS numStdReserve
+FROM
+    activity
+    LEFT JOIN participate ON activity.act_ID = participate.act_ID 
+                          AND participate.std_ID = ?
+    LEFT JOIN teacher ON activity.t_ID = teacher.t_ID
+    LEFT JOIN (
+        SELECT act_ID, COUNT(*) AS numStdReserve
+        FROM participate
+        GROUP BY act_ID
+    ) AS participate_count ON activity.act_ID = participate_count.act_ID
+ORDER BY activity.act_ID;
 
-// `;
+`;
 
     db.query(sql,[std_ID] ,(err, result) => {
         if (err) {
