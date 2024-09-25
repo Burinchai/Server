@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs";
 import dbPromise from "../dbPromise.js";
 import db from "../db.js"
 
-const baseURL = "localhost:5173";
+const baseURL = "https://it-activity-npru.vercel.app/";
 
 // Request Password Reset
 export const forgotPassword = async (req, res) => {
