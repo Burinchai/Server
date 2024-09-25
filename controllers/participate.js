@@ -48,7 +48,7 @@ export const getByStd_ID = (req, res) => {
         left join participate p on a.act_ID = p.act_ID
         left join teacher t on t.t_ID = a.t_ID
 
-        group by a.act_ID
+        group by a.act_ID, p.std_ID, p.par_status, t.t_fname, t.t_lname, t.t_mobile, t.t_email;
         
     `
 //     const sql2 = `
