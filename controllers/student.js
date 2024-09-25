@@ -54,7 +54,7 @@ FROM
 	student std
 JOIN
 	section s ON std.sec_ID = s.sec_ID
-JOIN
+LEFT JOIN
 	teacher t ON s.t_ID = t.t_ID
 
     `
@@ -80,7 +80,7 @@ export const getStudentOne = (req, res) => {
 	        student std
         JOIN
 	        section s ON std.sec_ID = s.sec_ID
-        JOIN
+        LEFT JOIN
 	        teacher t ON s.t_ID = t.t_ID
         WHERE
             std.std_ID = ?
