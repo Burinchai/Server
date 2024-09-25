@@ -75,7 +75,7 @@ LEFT JOIN
 export const getStudentOne = (req, res) => {
     const sql = `
         SELECT
-	        *
+	        std.*, s.*, t.t_fname, t.t_lname
         FROM
 	        student std
         JOIN
