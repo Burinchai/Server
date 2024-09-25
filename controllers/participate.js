@@ -68,7 +68,7 @@ ORDER BY activity.act_ID;
 
 `;
 
-    db.query(sql,[std_ID] ,(err, result) => {
+    db.query(sql2,[std_ID] ,(err, result) => {
         if (err) {
             return res.status(500).json({
                 error: err.message
