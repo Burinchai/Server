@@ -1,12 +1,11 @@
-import express from 'express'
-import {
-    post,
-    getMailbox
-} from '../controllers/notification.js'
+import express from "express";
+import { post, getMailbox, upload,newsCancelReserve } from "../controllers/notification.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.post('/notification', post)
-router.get('/notification', getMailbox)
+router.post("/upload", upload);
+router.post("/notification", post);
+router.post("/cancel-reserve/:login_ID", newsCancelReserve);
+router.get("/notification", getMailbox);
 
-export default router
+export default router;

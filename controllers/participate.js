@@ -226,17 +226,14 @@ export const reserveActivity = (req, res) => {
 
 // cancel reserve
 export const cancelReserve = (req, res) => {
-    const sql = `DELETE FROM manage WHERE std_ID = ? AND act_ID = ?`;
-    const {
-        std_ID,
-        act_ID
-    } = req.body;
-
+    const sql = `DELETE FROM particapate WHERE std_ID = ? AND act_ID = ?`;
+    const { std_ID, act_ID } = req.body;
+  
     db.query(sql, [std_ID, act_ID], (err, result) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json('Deleted Reserve successfully');
+      if (err) return res.status(500).json(err);
+      return res.status(200).json("Deleted Reserve successfully");
     });
-};
+  };
 
 // after cancer reserve then decrease numStd in activity
 export const decreaseNumStd = (req, res) => {

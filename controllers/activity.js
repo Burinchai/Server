@@ -17,9 +17,7 @@ export const manage = (req, res) => {
   });
 };
 export const reserve = (req, res) => {
-  const {
-    act_ID
-  } = req.params;
+  const { act_ID } = req.params;
 
   const sql = "DELETE FROM manage WHERE act_ID = ? ";
 
@@ -38,8 +36,7 @@ export const reserve = (req, res) => {
 
 //create
 export const createActivity = (req, res) => {
-  const q =
-    `INSERT INTO activity(act_title, act_desc, act_dateStart, act_dateEnd, act_numStd, act_location, t_ID,  act_createAt) VALUES (?, ?, ?, ?, ?, ?, ? , ?)`;
+  const q = `INSERT INTO activity(act_title, act_desc, act_dateStart, act_dateEnd, act_numStd, act_location, t_ID,  act_createAt) VALUES (?, ?, ?, ?, ?, ?, ? , ?)`;
   const {
     act_title,
     act_desc,
@@ -71,9 +68,7 @@ export const createActivity = (req, res) => {
 
 // update
 export const updateActivity = (req, res) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
   const {
     act_title,
     act_desc,
@@ -124,8 +119,8 @@ export const updateActivity = (req, res) => {
         message: "Activity updated successfully and news ",
         result,
       });
-
-    });
+    }
+  );
 };
 
 // getAll
@@ -158,6 +153,7 @@ GROUP BY
         message: "No activity found",
       });
     }
+    console.log(result);
     return res.json(result);
   });
 };
@@ -193,9 +189,7 @@ export const readActivityOne = (req, res) => {
 };
 
 export const deleteActivity = (req, res) => {
-  const {
-    id
-  } = req.params;
+  const { id } = req.params;
   const sql = "DELETE FROM activity WHERE act_ID = ?";
 
   db.query(sql, [id], (err, result) => {
@@ -233,15 +227,36 @@ export const updateStatus = (req, res) => {
   });
 };
 
+export const uploadWeb3 = (req, res) => {
+  const { act_transaction, act_ID } = req.body;
+  console.log(req.body);
+
+  const sql = `
+    UPDATE
+      activity
+    SET
+      act_status = "สิ้นสุดลงแล้ว",
+      act_transaction = ?
+    WHERE 
+      act_ID = ?
+    `;
+  db.query(sql, [act_transaction, act_ID], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+    return res.json({
+      message: "updated act_transaction and act_status successfully",
+      result,
+    });
+  });
+};
 
 //transection
 export const transection = (req, res) => {
-  const {
-    id
-  } = req.params;
-  const {
-    act_transaction
-  } = req.body;
+  const { id } = req.params;
+  const { act_transaction } = req.body;
 
   const sql = `UPDATE activity SET
         act_transaction = ?
