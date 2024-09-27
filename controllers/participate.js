@@ -105,7 +105,7 @@ export const readManage = (req, res) => {
   });
 };
 export const readManageOne = (req, res) => {
-  const { id } = req.params;
+  const { act_ID } = req.params;
   const sql = `
     SELECT 
         participate.*,
@@ -121,7 +121,7 @@ export const readManageOne = (req, res) => {
         LEFT JOIN section ON section.sec_ID = student.sec_ID
     WHERE 
         participate.act_ID = ?`
-    db.query(sql, [id], (err, result) => {
+    db.query(sql, [act_ID], (err, result) => {
         if (err) {
             return res.status(500).json({
                 error: err.message
