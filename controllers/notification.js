@@ -152,11 +152,8 @@ export const newsCancelReserve = (req, res) => {
   const {
     topic,
     description,
-  } = req.body;
-
-  const {
     login_ID
-  } = req.params
+  } = req.body;
 
   const sqlNotification = `
         INSERT INTO notification(topic, description)

@@ -176,7 +176,7 @@ export const reserveActivity = (req, res) => {
 
 // cancel reserve
 export const cancelReserve = (req, res) => {
-  const sql = `DELETE FROM particapate WHERE std_ID = ? AND act_ID = ?`;
+  const sql = `DELETE FROM participate WHERE std_ID = ? AND act_ID = ?`;
   const { std_ID, act_ID } = req.body;
 
   db.query(sql, [std_ID, act_ID], (err, result) => {
