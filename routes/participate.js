@@ -1,36 +1,32 @@
-import express from 'express'
+import express from "express";
 import {
-    readManage,
-    readManageOne,
-    reserveActivity,
-    cancelReserve,
-    decreaseNumStd,
-    upload,
-    getByStd_ID,
-    getByAct_ID
+  readManage,
+  readManageOne,
+  reserveActivity,
+  cancelReserve,
+  decreaseNumStd,
+  upload,
+  getByStd_ID,
+  getByAct_ID,
+  updateStatus,
+  countNumStdReserve,
+} from "../controllers/participate.js";
 
+const router = express.Router();
 
-} from '../controllers/participate.js'
-// import {
-//     updateStatusNotJoin
-// } from '../controllers/manage.js';
-import {
-    updateStatus
-} from '../controllers/participate.js'; // Adjust the path as needed
-const router = express.Router()
+router.get("/participate", getByStd_ID);
+router.get("/reserve", getByAct_ID);
+router.get("/countNumStdReserve/:act_ID", countNumStdReserve);
 
-router.get('/participate', getByStd_ID)
-router.get('/reserve', getByAct_ID)
+router.get("/reserve/:id", readManageOne);
+router.get("/upload", upload);
 
+router.post("/participate", reserveActivity);
 
+router.delete("/reserve", cancelReserve);
+router.put("/cancelReserve", decreaseNumStd);
 
-router.get('/reserve/:id', readManageOne)
-router.get('/upload', upload)
+// status join notjoin activity
+router.put("/participate", updateStatus);
 
-router.post('/participate', reserveActivity)
-
-router.delete('/reserve', cancelReserve)
-router.put('/cancelReserve', decreaseNumStd)
-router.put('/manage', updateStatus);
-
-export default router
+export default router;

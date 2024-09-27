@@ -54,7 +54,7 @@ FROM
 	student std
 JOIN
 	section s ON std.sec_ID = s.sec_ID
-LEFT JOIN
+JOIN
 	teacher t ON s.t_ID = t.t_ID
 
     `
