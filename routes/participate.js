@@ -18,7 +18,7 @@ router.get("/participate", getByStd_ID);
 router.get("/reserve", getByAct_ID);
 router.get("/countNumStdReserve/:act_ID", countNumStdReserve);
 
-router.get("/reserve/:id", readManageOne);
+router.get("/reserve/:act_ID", readManageOne);
 router.get("/upload", upload);
 
 router.post("/participate", reserveActivity);
